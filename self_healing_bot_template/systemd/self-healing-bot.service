@@ -1,0 +1,22 @@
+[Unit]
+Description=Self-Healing Trading Bot
+After=network-online.target
+Wants=network-online.target
+StartLimitIntervalSec=300
+StartLimitBurst=10
+
+[Service]
+Type=notify
+NotifyAccess=main
+WorkingDirectory=/opt/self-healing-bot
+EnvironmentFile=/opt/self-healing-bot/.env
+ExecStart=/usr/bin/python3 /opt/self-healing-bot/main.py
+Restart=on-failure
+RestartSec=5
+WatchdogSec=30s
+TimeoutStartSec=30
+TimeoutStopSec=30
+KillSignal=SIGINT
+
+[Install]
+WantedBy=multi-user.target
